@@ -1,0 +1,264 @@
+  html, body {
+    height: 100%;
+    background: #1e1e1e;
+    margin: 0;
+  }
+
+  #controls {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: none;
+    background: #333333;
+    color: #F28b82;
+    font-size: 30px;
+    padding: 9px 0 0 0;
+    margin: 8px;
+  }
+
+  button:hover, button:focus {
+    outline: none;
+  }
+
+  button::-moz-focus-inner {
+    border: 0;
+  }
+
+  button:active {
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
+    line-height: 3rem;
+  }
+
+  button:disabled {
+    pointer-events: none;
+    background: #333;
+  }
+
+  button:first-child {
+    margin-left: 0;
+  }
+
+  li {
+    list-style: none;
+    margin-bottom: 1rem;
+  }
+
+  #formats {
+    margin-top: 0.5rem;
+    font-size: 80%;
+  }
+
+  header {
+    width: 100%;
+    margin-bottom: 30px;
+    overflow: hidden;
+    padding: 0 0 10px 0;
+    color: #fff;
+  }
+
+  header img {
+    float: left;
+    margin-top: 15px;
+  }
+
+  header p {
+    font-family: 'Fira Mono', monospace;
+    font-size: 2em;
+    float: left;
+  }
+
+  #formats {
+    display: none;
+  }
+
+  main {
+    width: 80%;
+    padding: 60px 0 0 0;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .audio_result_card {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    background: #222;
+    border-radius: 5px;
+    height: 200px;
+  }
+
+  .modal {
+    width: 100%;
+    height: calc(100% - 95px);
+    position: absolute;
+    top: 95px;
+    left: 0;
+    background: #1e1e1e;
+    display: none;
+  }
+
+  .volume_area {
+    width: 100%;
+    height: 150px;
+  }
+
+  .volume-viewer {
+    margin: 50px auto 0;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    text-align: center;
+    line-height: 110px;
+    font-size: 30px;
+    border-radius: 50%;
+    color: #fff;
+    background: #F28b82;
+    z-index: 2;
+  }
+
+  .volume-viewer-volume {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 50%;
+    top: 0px;
+    left: 0px;
+    z-index: -2;
+    background: #F28b82;
+    opacity: 0.8;
+    animation: sizeScale 2s ease 0s infinite alternate none running;
+  }
+
+  .filename {
+    width: calc(100% - 20px);
+    height: 39px;
+    color: #ccc;
+    text-align: left;
+    line-height: 39px;
+    padding-left: 20px;
+    border-bottom: 1px solid rgb(167, 166, 166);
+    font-size: 13px;
+    margin: 0;
+  }
+
+  @keyframes sizeScale {
+    0% {
+      width: 100px;
+      height: 100px;
+      top: 0px;
+      left: 0px;
+    }
+    100% {
+      width: 150px;
+      height: 150px;
+      top: -25px;
+      left: -25px
+    }
+  }
+  .downloadlink{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 14px;
+    color: #F28b82;
+    text-decoration: none;
+    border-radius: 2px;
+    line-height: 36px;
+    float:left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+  .downloadlink:hover{
+    background: rgba(255, 136, 125, 0.233);
+  }
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ripple .rp-effect {
+    /*エフェクト*/
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.35;
+    /*波紋の濃さ*/
+    transform: scale(0);
+    background: #FFF;
+    /*波紋色*/
+    animation: ripple 700ms;
+    pointer-events: none;
+  }
+  .modal-c{
+    width: 100%;
+    text-align: center;
+  }
+  @-webkit-keyframes ripple {
+    to {
+      opacity: 0;
+      transform: scale(2.0);
+    }
+  }
+
+  @keyframes ripple {
+    to {
+      opacity: 0;
+      transform: scale(2.0);
+    }
+  }
+
+  @media screen and (max-width:400px) {
+    button {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      border: none;
+      font-size: 30px;
+      padding: 9px 0 0 0;
+      margin: 8px;
+    }
+    main{
+      width: 100%;
+      margin: none;
+    }
+    ol{
+      padding: 0;
+    }
+    .audio_result_card {
+      width: 99%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+      background: #222;
+      border-radius: 5px;
+      height: 200px;
+    }
+    .volumearea{
+      display: none;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 9px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+    background: #333;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #757575;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background-color: #525252;
+  }
