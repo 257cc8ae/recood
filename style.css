@@ -122,6 +122,19 @@
     background: #F28b82;
     z-index: 2;
   }
+  .volume-viewer-false {
+    margin: 50px auto 0;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    text-align: center;
+    line-height: 110px;
+    font-size: 30px;
+    border-radius: 50%;
+    color: #F28b82;
+    background: #333;
+    z-index: 2;
+  }
 
   .volume-viewer-volume {
     width: 100px;
@@ -147,7 +160,13 @@
     font-size: 13px;
     margin: 0;
   }
-
+  .time{
+    text-align: center;
+    color: #fff;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
   @keyframes sizeScale {
     0% {
       width: 100px;

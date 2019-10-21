@@ -12,108 +12,58 @@ var audioContext //audio context to help us record
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
 var pauseButton = document.getElementById("pauseButton");
-
-//add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
 pauseButton.addEventListener("click", pauseRecording);
-
 function startRecording() {
 	console.log("recordButton clicked");
-
-	/*
-		Simple constraints object, for more advanced audio features see
-		https://addpipe.com/blog/audio-constraints-getusermedia/
-	*/
-
 	var constraints = { audio: true, video: false }
-
-	/*
-	  Disable the record button until we get a success or fail from getUserMedia() 
-  */
-
 	recordButton.disabled = true;
 	stopButton.disabled = false;
 	pauseButton.disabled = false
-
-	/*
-    	We're using the standard promise based getUserMedia() 
-    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-	*/
-
 	navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
 		console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-
-		/*
-			create an audio context after getUserMedia is called
-			sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-			the sampleRate defaults to the one set in your OS for your playback device
-
-		*/
 		audioContext = new AudioContext();
-
-		//update the format 
 		document.getElementById("formats").innerHTML = "Format: 1 channel pcm @ " + audioContext.sampleRate / 1000 + "kHz"
-
-		/*  assign to gumStream for later use  */
 		gumStream = stream;
-
-		/* use the stream */
 		input = audioContext.createMediaStreamSource(stream);
-
-		/* 
-			Create the Recorder object and configure to record mono sound (1 channel)
-			Recording 2 channels  will double the file size
-		*/
 		rec = new Recorder(input, { numChannels: 1 })
-
-		//start the recording process
 		rec.record()
-
 		console.log("Recording started");
-
 	}).catch(function (err) {
-		//enable the record button if getUserMedia() fails
 		recordButton.disabled = false;
 		stopButton.disabled = true;
 		pauseButton.disabled = true
 	});
 	document.querySelector(".modal").style.display = "block";
+	document.querySelector(".time").setAttribute("p","yes");
 }
-
 function pauseRecording() {
-	console.log("pauseButton clicked rec.recording=", rec.recording);
 	if (rec.recording) {
-		//pause
 		rec.stop();
 		pauseButton.innerHTML = `<i class="icon-pause">`;
+		document.querySelector(".time").setAttribute("p","no");
+		mic(false)
 	} else {
-		//resume
 		rec.record()
 		pauseButton.innerHTML = `<i class="icon-pause">`;
+		document.querySelector(".time").setAttribute("p","yes")
+		mic(true)
 	}
 }
-
 function stopRecording() {
 	console.log("stopButton clicked");
-
-	//disable the stop button, enable the record too allow for new recordings
 	stopButton.disabled = true;
 	recordButton.disabled = false;
 	pauseButton.disabled = true;
-
-	//reset button just in case the recording is stopped while paused
 	pauseButton.innerHTML = `<i class="icon-pause">`;
-
-	//tell the recorder to stop the recording
 	rec.stop();
-
-	//stop microphone access
 	gumStream.getAudioTracks()[0].stop();
-
-	//create the wav blob and pass it on to createDownloadLink
 	rec.exportWAV(createDownloadLink);
 	document.querySelector(".modal").style.display = "none";
+	document.querySelector(".time").setAttribute("n","0")
+	document.querySelector(".time").setAttribute("p","no")
+	mic(true)
 }
 
 function createDownloadLink(blob) {
@@ -132,8 +82,25 @@ function createDownloadLink(blob) {
 	afaudio(`audio_result_card${num}`,url,"100%");
 	var link = document.createElement("a")
 	link.href = url;
-	link.download = filename + ".wav"; //download forces the browser to donwload the file using the  filename
+	link.download = filename + ".wav";
 	link.innerHTML = "DOWNLOAD";
 	link.setAttribute("class","downloadlink ripple")
 	card.appendChild(link)
 }
+function counttime(){
+	var time = document.querySelector(".time");
+	if(time.getAttribute("p") === "yes"){
+		time.innerHTML = toHms(Number(time.getAttribute("n")) + 1)
+		time.setAttribute("n",String(Number(time.getAttribute("n")) + 1))
+	}
+}
+function mic(s){
+	if(s === true){
+		document.querySelector(".volume-viewer-volume").style.display="block";
+		document.getElementById("vv").setAttribute("class","volume-viewer");
+	}else if(s === false){
+		document.querySelector(".volume-viewer-volume").style.display="none";
+		document.getElementById("vv").setAttribute("class","volume-viewer-false");
+	}
+}
+setInterval(counttime,1000);
